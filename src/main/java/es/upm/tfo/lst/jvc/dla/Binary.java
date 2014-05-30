@@ -10,11 +10,18 @@ public interface Binary {
 	
 	public int PORT = 20554;
 	
+	//AuthProtocol
+	public String PJOK = "PJ_OK";
+	public String PJREQ = "PJREQ";
+	public String PJACK = "PJACK";
+	public String PJ_NG = "PJ_NG";
+	public String PJ_NAK = "PJNAK";
+	
 	// Headers
-	public byte PC_CMD_HEAD = 0x21; 
-	public byte UNIT_CMD_HEAD = 0x3F;
-	public byte RESP_HEAD = 0x40;
-	public byte ACK_HEAD = 0x06;
+	public byte HEAD_OPERATION_CMD= 0x21; 
+	public byte HEAD_REFERECE_CMD= 0x3F;
+	public byte HEAD_RESP= 0x40;
+	public byte HEAD_ACK= 0x06;
 	
 	public short UNIT_DLA_RS46 = (short) 0x8901;
 	
