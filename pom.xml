@@ -4,7 +4,7 @@
   <artifactId>jvc.dla</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <name>jvc dla projector interface in Java</name>
+  <name>JVC DLA projector interface in Java</name>
   
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -12,5 +12,6 @@
   
   <modules>
 	<module>jvc.dla.controller</module>
+	<module>jvc.dla.swing</module>
   </modules>
 </project>
