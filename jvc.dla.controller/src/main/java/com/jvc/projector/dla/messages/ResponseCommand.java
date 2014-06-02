@@ -43,7 +43,7 @@ public class ResponseCommand extends Message {
 
 	public byte getArg(int i){
 		int j = 1;
-		while (data[j++] == upper(Binary.UNIT_DLA_RS46));
+		while (data[j++] != upper(Binary.UNIT_DLA_RS46) && j < data.length);
 		/* IS there a bug in the protocol? according to source it is supposed to be:
 		 * tx: 3f 89 01 49 50 0a 
 		 * rx: 06 89 01 49 50 0a 
@@ -54,7 +54,22 @@ public class ResponseCommand extends Message {
 		 * rx: 06 c2 89 01 49 50 0a 
 		 * rx: 40 c2 89 01 49 50 36 0a 
 		 */
-
-		return data[4 + i + j];
+		/*
+		 * ALSO getting (when running as external): 
+		 * tx: 3f 89 01 50 57 0a
+		 * rx: 06 3f 01 50 57 0a
+		 * rx: 40 3f 01 50 57 31 0a
+		 * 
+		 * instead of:
+		 * tx: 3f 89 01 50 57 0a
+         * rx: 06 89 01 50 57 0a
+		 * rx: 40 89 01 50 57 31 0a
+		 */
+		if (j >= data.length){
+			j=2;
+		}
+//		System.out.println(j);
+//		System.out.println(String.format("%02x ", data[3 + i + j] & 0xff));
+		return data[3 + i + j];
 	}
 }
