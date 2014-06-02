@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2014 Universidad Politécnica de Madrid UPM
+ * Copyright 2014 Universidad Politï¿½cnica de Madrid UPM
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,6 +33,11 @@ import com.jvc.projector.dla.messages.ResponseCommand;
  *
  */
 public class DLAExtLAN implements DLAExternalConnector {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	private String addr;
 	private Socket socket;
