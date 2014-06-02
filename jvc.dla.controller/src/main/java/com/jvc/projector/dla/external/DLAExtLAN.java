@@ -54,6 +54,10 @@ public class DLAExtLAN implements DLAExternalConnector, Serializable {
 		addr = address;
 	}
 	
+	public String getAddress(){
+		return addr;
+	}
+	
 	private void connect(){
 		try {
 			socket = new Socket(addr, Binary.PORT);

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2014 Universidad Politécnica de Madrid UPM
+ * Copyright 2014 Universidad Politï¿½cnica de Madrid UPM
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,6 +39,10 @@ public class DLAController {
 		this.con = connector;
 	}
 
+	public DLAExternalConnector getConnector(){
+		return con;
+	}
+	
 	public boolean checkConnection(){
 		OperationCommand m = new OperationCommand(Binary.CMD_CONNECTION_CHECK);
 		return con.sendMessage(m);
