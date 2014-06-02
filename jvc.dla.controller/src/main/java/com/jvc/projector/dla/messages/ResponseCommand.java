@@ -54,6 +54,7 @@ public class ResponseCommand extends Message {
 		 * rx: 06 c2 89 01 49 50 0a 
 		 * rx: 40 c2 89 01 49 50 36 0a 
 		 */
-		return data[5 + i + j];
+
+		return data[4 + i + j];
 	}
 }
