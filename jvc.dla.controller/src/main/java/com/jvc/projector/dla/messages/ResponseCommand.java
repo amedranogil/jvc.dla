@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2014 Universidad Politécnica de Madrid UPM
+ * Copyright 2014 Universidad Politï¿½cnica de Madrid UPM
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,6 +42,18 @@ public class ResponseCommand extends Message {
 	}
 
 	public byte getArg(int i){
-		return data[5 + i];
+		int j = 1;
+		while (data[j++] == upper(Binary.UNIT_DLA_RS46));
+		/* IS there a bug in the protocol? according to source it is supposed to be:
+		 * tx: 3f 89 01 49 50 0a 
+		 * rx: 06 89 01 49 50 0a 
+		 * rx: 40 89 01 49 50 36 0a 
+		 * 
+		 * but trace is:
+		 * tx: 3f 89 01 49 50 0a 
+		 * rx: 06 c2 89 01 49 50 0a 
+		 * rx: 40 c2 89 01 49 50 36 0a 
+		 */
+		return data[5 + i + j];
 	}
 }
