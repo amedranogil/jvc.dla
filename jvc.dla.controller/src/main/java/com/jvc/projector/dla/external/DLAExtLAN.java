@@ -18,6 +18,7 @@ package com.jvc.projector.dla.external;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.net.Socket;
 
 import com.jvc.projector.dla.Binary;
@@ -32,7 +33,7 @@ import com.jvc.projector.dla.messages.ResponseCommand;
  * @author amedrano
  *
  */
-public class DLAExtLAN implements DLAExternalConnector {
+public class DLAExtLAN implements DLAExternalConnector, Serializable {
 	
 	/**
 	 * 
@@ -40,9 +41,9 @@ public class DLAExtLAN implements DLAExternalConnector {
 	private static final long serialVersionUID = 1L;
 	
 	private String addr;
-	private Socket socket;
-	private OutputStream out;
-	private InputStream in;
+	private transient Socket socket;
+	private transient OutputStream out;
+	private transient InputStream in;
 	
 	private boolean debug = true;
 	
