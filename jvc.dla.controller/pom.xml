@@ -6,5 +6,5 @@
 	<version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>jvc.dla.controller</artifactId>
-  <name>jvc dla java programative interface</name>
+  <name>JVC DLA java programative interface</name>
 </project>
