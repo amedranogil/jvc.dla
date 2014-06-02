@@ -10,10 +10,15 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.border.EmptyBorder;
 
-import es.upm.tfo.lst.jvc.dla.DLAControl;
+import es.upm.tfo.lst.jvc.dla.DLAController;
+import es.upm.tfo.lst.jvc.dla.external.DLAExtLAN;
 
 public class OnOff extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	protected static final String ADDR = "192.168.1.232";
 	private JPanel contentPane;
 
@@ -45,11 +50,11 @@ public class OnOff extends JFrame {
 		setContentPane(contentPane);
 		
 		JToggleButton tglbtnProjector = new JToggleButton("Projector");
-		DLAControl cont = new DLAControl(ADDR);
+		DLAController cont = new DLAController(new DLAExtLAN(ADDR));
 		tglbtnProjector.setSelected(cont.isOn());
 		tglbtnProjector.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				DLAControl cont = new DLAControl(ADDR);
+				DLAController cont = new DLAController(new DLAExtLAN(ADDR));
 				if (!((JToggleButton)arg0.getSource()).isSelected()){
 					cont.poweOff();
 				}else {
