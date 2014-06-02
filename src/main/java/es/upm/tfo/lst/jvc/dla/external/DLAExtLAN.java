@@ -13,17 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package es.upm.tfo.lst.jvc.dla;
+package es.upm.tfo.lst.jvc.dla.external;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Scanner;
 
+import es.upm.tfo.lst.jvc.dla.Binary;
 import es.upm.tfo.lst.jvc.dla.messages.ACKMessage;
 import es.upm.tfo.lst.jvc.dla.messages.Message;
 import es.upm.tfo.lst.jvc.dla.messages.OperationCommand;
@@ -34,7 +31,7 @@ import es.upm.tfo.lst.jvc.dla.messages.ResponseCommand;
  * @author amedrano
  *
  */
-public class DLAConnect {
+public class DLAExtLAN implements DLAExternalConnector {
 	
 	private String addr;
 	private Socket socket;
@@ -46,7 +43,7 @@ public class DLAConnect {
 	/**
 	 * 
 	 */
-	public DLAConnect(String address) {
+	public DLAExtLAN(String address) {
 		addr = address;
 	}
 	
@@ -174,6 +171,7 @@ public class DLAConnect {
 		return null;
 	}
 
+	/**{@inheritDoc} */
 	public synchronized Message[] sendMessageWithResponse(Message cmd){
 		Message[] msgs;
 		if (cmd instanceof ReferenceCommand){
@@ -204,6 +202,7 @@ public class DLAConnect {
 		return null;
 	}
 	
+	/**{@inheritDoc} */
 	public synchronized boolean sendMessage(Message cmd){
 		Message[] msgs = sendMessageWithResponse(cmd);
 		return msgs != null && msgs.length > 0;

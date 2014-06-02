@@ -17,6 +17,7 @@ package es.upm.tfo.lst.jvc.dla;
 
 import java.nio.ByteBuffer;
 
+import es.upm.tfo.lst.jvc.dla.external.DLAExternalConnector;
 import es.upm.tfo.lst.jvc.dla.messages.Message;
 import es.upm.tfo.lst.jvc.dla.messages.OperationCommand;
 import es.upm.tfo.lst.jvc.dla.messages.ReferenceCommand;
@@ -26,15 +27,15 @@ import es.upm.tfo.lst.jvc.dla.messages.ResponseCommand;
  * @author amedrano
  *
  */
-public class DLAControl {
+public class DLAController {
 
-	private DLAConnect con;
+	private DLAExternalConnector con;
 
 	/**
 	 * 
 	 */
-	public DLAControl(String address) {
-		this.con = new DLAConnect(address);
+	public DLAController(DLAExternalConnector connector) {
+		this.con = connector;
 	}
 
 	public boolean checkConnection(){
