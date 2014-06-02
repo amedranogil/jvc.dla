@@ -13,35 +13,51 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package es.upm.tfo.lst.jvc.dla.messages;
-
-import es.upm.tfo.lst.jvc.dla.Binary;
+package com.jvc.projector.dla.messages;
 
 /**
  * @author amedrano
  *
  */
-public class ResponseCommand extends Message {
+public class Message {
 
-	/**
-	 * 
-	 */
-	public ResponseCommand() {
-		// TODO Auto-generated constructor stub
+	protected byte[] data;
+	
+	public Message(){
+		super();
+	};
+	
+	public Message(byte[] data) throws IllegalArgumentException{
+		this.data = data;
 	}
-
-	/**
-	 * @param data
-	 * @throws IllegalArgumentException
-	 */
-	public ResponseCommand(byte[] data) throws IllegalArgumentException {
-		super(data);
-		if (data[0] != Binary.HEAD_RESP){
-			throw new IllegalArgumentException();
+	
+	public byte[] getData(){
+		return data;
+	}
+	
+	public String toString(){
+		StringBuffer sb = new StringBuffer();
+		if (data != null) {
+			for (int i = 0; i < data.length; i++) {
+				sb.append(String.format("%02x ", data[i] & 0xff));
+			}
 		}
+		return sb.toString();
 	}
-
-	public byte getArg(int i){
-		return data[5 + i];
+	
+	static protected byte upper(short x){
+		return (byte)((x>>8) & 0xff);
+	}
+	
+	static protected byte lower(short x){
+		return (byte)(x & 0xff);
+	}
+	
+	public short getCommand(){
+		return (short) ((data[3]<<8) + data[4]);
+	}
+	
+	public short getUnit(){
+		return (short) ((data[1]<<8) + data[2]);
 	}
 }

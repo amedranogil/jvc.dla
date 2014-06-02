@@ -1,6 +1,6 @@
-package es.upm.tfo.lst.jvc.dla.external;
+package com.jvc.projector.dla.external;
 
-import es.upm.tfo.lst.jvc.dla.messages.Message;
+import com.jvc.projector.dla.messages.Message;
 
 public interface DLAExternalConnector {
 

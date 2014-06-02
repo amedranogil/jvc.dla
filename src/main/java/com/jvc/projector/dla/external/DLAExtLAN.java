@@ -13,19 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package es.upm.tfo.lst.jvc.dla.external;
+package com.jvc.projector.dla.external;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
-import es.upm.tfo.lst.jvc.dla.Binary;
-import es.upm.tfo.lst.jvc.dla.messages.ACKMessage;
-import es.upm.tfo.lst.jvc.dla.messages.Message;
-import es.upm.tfo.lst.jvc.dla.messages.OperationCommand;
-import es.upm.tfo.lst.jvc.dla.messages.ReferenceCommand;
-import es.upm.tfo.lst.jvc.dla.messages.ResponseCommand;
+import com.jvc.projector.dla.Binary;
+import com.jvc.projector.dla.messages.ACKMessage;
+import com.jvc.projector.dla.messages.Message;
+import com.jvc.projector.dla.messages.OperationCommand;
+import com.jvc.projector.dla.messages.ReferenceCommand;
+import com.jvc.projector.dla.messages.ResponseCommand;
+
 
 /**
  * @author amedrano

@@ -1,4 +1,4 @@
-package es.upm.tfo.lst.jvc.dla;
+package com.jvc.projector.dla;
 
 /**
  * 

@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package es.upm.tfo.lst.jvc.dla.messages;
+package com.jvc.projector.dla.messages;
 
-import es.upm.tfo.lst.jvc.dla.Binary;
+import com.jvc.projector.dla.Binary;
 
 /**
  * @author amedrano

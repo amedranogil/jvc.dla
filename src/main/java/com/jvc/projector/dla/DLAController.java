@@ -13,15 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package es.upm.tfo.lst.jvc.dla;
+package com.jvc.projector.dla;
 
 import java.nio.ByteBuffer;
 
-import es.upm.tfo.lst.jvc.dla.external.DLAExternalConnector;
-import es.upm.tfo.lst.jvc.dla.messages.Message;
-import es.upm.tfo.lst.jvc.dla.messages.OperationCommand;
-import es.upm.tfo.lst.jvc.dla.messages.ReferenceCommand;
-import es.upm.tfo.lst.jvc.dla.messages.ResponseCommand;
+import com.jvc.projector.dla.external.DLAExternalConnector;
+import com.jvc.projector.dla.messages.Message;
+import com.jvc.projector.dla.messages.OperationCommand;
+import com.jvc.projector.dla.messages.ReferenceCommand;
+import com.jvc.projector.dla.messages.ResponseCommand;
+
 
 /**
  * @author amedrano

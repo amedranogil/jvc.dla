@@ -10,8 +10,9 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.border.EmptyBorder;
 
-import es.upm.tfo.lst.jvc.dla.DLAController;
-import es.upm.tfo.lst.jvc.dla.external.DLAExtLAN;
+import com.jvc.projector.dla.DLAController;
+import com.jvc.projector.dla.external.DLAExtLAN;
+
 
 public class OnOff extends JFrame {
 

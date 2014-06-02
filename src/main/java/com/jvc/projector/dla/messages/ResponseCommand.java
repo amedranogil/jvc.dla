@@ -13,20 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package es.upm.tfo.lst.jvc.dla.messages;
+package com.jvc.projector.dla.messages;
 
-import es.upm.tfo.lst.jvc.dla.Binary;
+import com.jvc.projector.dla.Binary;
 
 /**
  * @author amedrano
  *
  */
-public class ReferenceCommand extends Message {
+public class ResponseCommand extends Message {
 
 	/**
 	 * 
 	 */
-	public ReferenceCommand() {
+	public ResponseCommand() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -34,29 +34,14 @@ public class ReferenceCommand extends Message {
 	 * @param data
 	 * @throws IllegalArgumentException
 	 */
-	public ReferenceCommand(byte[] data) throws IllegalArgumentException {
+	public ResponseCommand(byte[] data) throws IllegalArgumentException {
 		super(data);
-		if (data[0] != Binary.HEAD_REFERECE_CMD){
+		if (data[0] != Binary.HEAD_RESP){
 			throw new IllegalArgumentException();
 		}
 	}
-	
 
-	public ReferenceCommand(short command, byte[] args) {
-		super();
-		data = new byte[6 + args.length];
-		data[0] = Binary.HEAD_REFERECE_CMD;
-		data[1] = upper(Binary.UNIT_DLA_RS46);
-		data[2] = lower(Binary.UNIT_DLA_RS46);
-		data[3] = upper(command);
-		data[4] = lower(command);
-		for (int i = 0; i < args.length; i++) {
-			data [5+i] = args[i];
-		}
-		data[data.length-1] = Binary.TRAIL;
-	}
-	
-	public ReferenceCommand(short command){
-		this(command, new byte[0]);
+	public byte getArg(int i){
+		return data[5 + i];
 	}
 }
