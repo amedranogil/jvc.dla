@@ -43,34 +43,26 @@ public class DLAController {
 		return con.sendMessage(m);
 	}
 	
-	public boolean isOn(){
+	private byte getStatus(){
 		ReferenceCommand m = new ReferenceCommand(Binary.CMD_POWER);
 		Message[] r = con.sendMessageWithResponse(m);
 		if (r != null && r.length > 1
 				&& r[1] instanceof ResponseCommand){
-			return ((ResponseCommand)r[1]).getArg(0) == Binary.ARG_POWER_ON;
+			return ((ResponseCommand)r[1]).getArg(0);
 		}
 		throw new RuntimeException("did not receive correct response");
+	}
+	
+	public boolean isOn(){
+		return getStatus() == Binary.ARG_POWER_ON;
 	}
 	
 	public boolean isOff(){
-		ReferenceCommand m = new ReferenceCommand(Binary.CMD_POWER);
-		Message[] r = con.sendMessageWithResponse(m);
-		if (r != null && r.length > 1
-				&& r[1] instanceof ResponseCommand){
-			return ((ResponseCommand)r[1]).getArg(0) == Binary.ARG_POWER_OFF;
-		}
-		throw new RuntimeException("did not receive correct response");
+		return getStatus() == Binary.ARG_POWER_OFF;
 	}
 	
 	public boolean isCoolingDown(){
-		ReferenceCommand m = new ReferenceCommand(Binary.CMD_POWER);
-		Message[] r = con.sendMessageWithResponse(m);
-		if (r != null && r.length > 1
-				&& r[1] instanceof ResponseCommand){
-			return ((ResponseCommand)r[1]).getArg(0) == Binary.ARG_POWER_COOL_DOWN;
-		}
-		throw new RuntimeException("did not receive correct response");
+		return getStatus() == Binary.ARG_POWER_COOL_DOWN;
 	}
 	
 	public byte getCurrentInput(){
@@ -83,19 +75,34 @@ public class DLAController {
 		throw new RuntimeException("did not receive correct response");		
 	}
 	
+	/**
+	 * Only sends power_on command If and only if isOff() == true.
+	 * Sending power_on command while in Cooling_Down status will result in error.
+	 */
 	public void poweOn(){
-		OperationCommand m = new OperationCommand(Binary.CMD_POWER, new byte[]{Binary.ARG_POWER_ON});
-		con.sendMessage(m);
+		if (isOff()){
+			OperationCommand m = new OperationCommand(Binary.CMD_POWER, new byte[]{Binary.ARG_POWER_ON});
+			con.sendMessage(m);
+		}
 	}
 	
+	/**
+	 * Only sends power_off command if and only if status is on.
+	 */
 	public void poweOff(){
-		OperationCommand m = new OperationCommand(Binary.CMD_POWER, new byte[]{Binary.ARG_POWER_OFF});
-		con.sendMessage(m);
+		if (isOn()) {
+			OperationCommand m = new OperationCommand(Binary.CMD_POWER,
+					new byte[] { Binary.ARG_POWER_OFF });
+			con.sendMessage(m);
+		}
 	}
 	
 	public void setCurrentInput(byte input){
-		OperationCommand m = new OperationCommand(Binary.CMD_INPUT, new byte[]{input});
-		con.sendMessage(m);
+		if (getCurrentInput() != input) {
+			OperationCommand m = new OperationCommand(Binary.CMD_INPUT,
+					new byte[] { input });
+			con.sendMessage(m);
+		}
 	}
 	
 	public void sendRemoteButton(int button){
