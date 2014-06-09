@@ -28,6 +28,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JToggleButton;
 import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
+import javax.swing.plaf.SliderUI;
 
 import com.jvc.projector.dla.Binary;
 
@@ -41,6 +42,7 @@ public class DLABasicControl extends JPanel implements ActionListener {
 	private JRadioButton rdbtnComposite;
 	private JRadioButton rdbtnPc;
 	private JToggleButton tglbtnOnoff;
+	private ButtonGroup inputGroup;
 
 	public DLABasicControl() {
 		setLayout(new BoxLayout(this, 3));
@@ -61,6 +63,7 @@ public class DLABasicControl extends JPanel implements ActionListener {
 				} else {
 					DLAInterface.getController().poweOn();
 				}
+				DLABasicControl.this.scheduleRefresh();
 			}
 		});
 		add(this.tglbtnOnoff);
@@ -69,7 +72,7 @@ public class DLABasicControl extends JPanel implements ActionListener {
 		panel.setBorder(new TitledBorder(null, "Input", 4, 2, null, null));
 		add(panel);
 
-		ButtonGroup inputGroup = new ButtonGroup();
+		inputGroup = new ButtonGroup();
 
 		this.rdbtnHdmi1 = new JRadioButton("HDMI1");
 		panel.add(this.rdbtnHdmi1);
@@ -93,24 +96,7 @@ public class DLABasicControl extends JPanel implements ActionListener {
 
 		addComponentListener(new ComponentListener() {
 			public void componentShown(ComponentEvent arg0) {
-				if (DLAInterface.getController() != null) {
-					DLABasicControl.this.tglbtnOnoff.setSelected(DLAInterface
-							.getController().isOn());
-					byte currentInput = DLAInterface.getController()
-							.getCurrentInput();
-					if (currentInput == Binary.ARG_INPUT_HDMI1) {
-						DLABasicControl.this.rdbtnHdmi1.setSelected(true);
-					}
-					if (currentInput == Binary.ARG_INPUT_HDMI2) {
-						DLABasicControl.this.rdbtnHdmi2.setSelected(true);
-					}
-					if (currentInput == Binary.ARG_INPUT_COMP) {
-						DLABasicControl.this.rdbtnComposite.setSelected(true);
-					}
-					if (currentInput == Binary.ARG_INPUT_PC) {
-						DLABasicControl.this.rdbtnPc.setSelected(true);
-					}
-				}
+				refresh();
 			}
 
 			public void componentResized(ComponentEvent arg0) {
@@ -124,26 +110,74 @@ public class DLABasicControl extends JPanel implements ActionListener {
 		});
 	}
 
+	protected void refresh() {
+		SwingUtilities.invokeLater(new Runnable() {
+
+			public void run() {
+				if (DLAInterface.getController() != null) {
+					if (DLAInterface.getController().isOn()) {
+						tglbtnOnoff.setSelected(true);
+						byte currentInput = DLAInterface.getController()
+								.getCurrentInput();
+						if (currentInput == Binary.ARG_INPUT_HDMI1) {
+							rdbtnHdmi1.setSelected(true);
+						}
+						if (currentInput == Binary.ARG_INPUT_HDMI2) {
+							rdbtnHdmi2.setSelected(true);
+						}
+						if (currentInput == Binary.ARG_INPUT_COMP) {
+							rdbtnComposite
+									.setSelected(true);
+						}
+						if (currentInput == Binary.ARG_INPUT_PC) {
+							rdbtnPc.setSelected(true);
+						}
+					} else {
+						tglbtnOnoff.setSelected(false);
+						inputGroup.clearSelection();
+					}
+				} 
+			}
+		});
+	}
+	
+	private void scheduleRefresh(){
+		new Thread(new Runnable() {
+			
+			public void run() {
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e) {	}
+				DLABasicControl.this.refresh();
+			}
+		}).start();
+	}
+
 	public void actionPerformed(final ActionEvent e) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				Object c = e.getSource();
 				if ((c == DLABasicControl.this.rdbtnHdmi1)
 						&& (DLABasicControl.this.rdbtnHdmi1.isSelected())) {
-					DLAInterface.getController().setCurrentInput(Binary.ARG_INPUT_HDMI1);
+					DLAInterface.getController().setCurrentInput(
+							Binary.ARG_INPUT_HDMI1);
 				}
 				if ((c == DLABasicControl.this.rdbtnHdmi2)
 						&& (DLABasicControl.this.rdbtnHdmi2.isSelected())) {
-					DLAInterface.getController().setCurrentInput(Binary.ARG_INPUT_HDMI2);
+					DLAInterface.getController().setCurrentInput(
+							Binary.ARG_INPUT_HDMI2);
 				}
 				if ((c == DLABasicControl.this.rdbtnComposite)
 						&& (DLABasicControl.this.rdbtnComposite.isSelected())) {
-					DLAInterface.getController().setCurrentInput(Binary.ARG_INPUT_COMP);
+					DLAInterface.getController().setCurrentInput(
+							Binary.ARG_INPUT_COMP);
 				}
 				if ((c == DLABasicControl.this.rdbtnPc)
 						&& (DLABasicControl.this.rdbtnPc.isSelected())) {
-					DLAInterface.getController().setCurrentInput(Binary.ARG_INPUT_PC);
+					DLAInterface.getController().setCurrentInput(
+							Binary.ARG_INPUT_PC);
 				}
+				DLABasicControl.this.scheduleRefresh();
 			}
 		});
 	}
