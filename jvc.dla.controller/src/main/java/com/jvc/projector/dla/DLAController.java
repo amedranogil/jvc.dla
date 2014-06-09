@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2014 Universidad Polit�cnica de Madrid UPM
+ * Copyright 2014 Universidad Politécnica de Madrid UPM
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
