@@ -19,6 +19,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -28,7 +32,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JToggleButton;
 import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
-import javax.swing.plaf.SliderUI;
 
 import com.jvc.projector.dla.Binary;
 
@@ -43,6 +46,11 @@ public class DLABasicControl extends JPanel implements ActionListener {
 	private JRadioButton rdbtnPc;
 	private JToggleButton tglbtnOnoff;
 	private ButtonGroup inputGroup;
+	
+	private ScheduledExecutorService scheduler =
+		       Executors.newScheduledThreadPool(1);
+	
+	private ScheduledFuture<?> refreshHandle;
 
 	public DLABasicControl() {
 		setLayout(new BoxLayout(this, 3));
@@ -63,7 +71,6 @@ public class DLABasicControl extends JPanel implements ActionListener {
 				} else {
 					DLAInterface.getController().poweOn();
 				}
-				DLABasicControl.this.scheduleRefresh();
 			}
 		});
 		add(this.tglbtnOnoff);
@@ -93,10 +100,13 @@ public class DLABasicControl extends JPanel implements ActionListener {
 		panel.add(this.rdbtnPc);
 		this.rdbtnPc.addActionListener(this);
 		inputGroup.add(this.rdbtnPc);
+		
+		
 
 		addComponentListener(new ComponentListener() {
 			public void componentShown(ComponentEvent arg0) {
-				refresh();
+				refreshHandle =
+			            scheduler.scheduleAtFixedRate(new Refresh(), 0, 10, TimeUnit.SECONDS);
 			}
 
 			public void componentResized(ComponentEvent arg0) {
@@ -106,12 +116,46 @@ public class DLABasicControl extends JPanel implements ActionListener {
 			}
 
 			public void componentHidden(ComponentEvent arg0) {
+				if (refreshHandle != null) {
+					refreshHandle.cancel(false);
+					refreshHandle = null;
+				}
 			}
 		});
 	}
 
-	protected void refresh() {
+	public void actionPerformed(final ActionEvent e) {
 		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				Object c = e.getSource();
+				if ((c == DLABasicControl.this.rdbtnHdmi1)
+						&& (DLABasicControl.this.rdbtnHdmi1.isSelected())) {
+					DLAInterface.getController().setCurrentInput(
+							Binary.ARG_INPUT_HDMI1);
+				}
+				if ((c == DLABasicControl.this.rdbtnHdmi2)
+						&& (DLABasicControl.this.rdbtnHdmi2.isSelected())) {
+					DLAInterface.getController().setCurrentInput(
+							Binary.ARG_INPUT_HDMI2);
+				}
+				if ((c == DLABasicControl.this.rdbtnComposite)
+						&& (DLABasicControl.this.rdbtnComposite.isSelected())) {
+					DLAInterface.getController().setCurrentInput(
+							Binary.ARG_INPUT_COMP);
+				}
+				if ((c == DLABasicControl.this.rdbtnPc)
+						&& (DLABasicControl.this.rdbtnPc.isSelected())) {
+					DLAInterface.getController().setCurrentInput(
+							Binary.ARG_INPUT_PC);
+				}
+			}
+		});
+	}
+	
+	private class Refresh implements Runnable{
+
+		public void run() {
+			SwingUtilities.invokeLater(new Runnable() {
 
 			public void run() {
 				if (DLAInterface.getController() != null) {
@@ -139,46 +183,8 @@ public class DLABasicControl extends JPanel implements ActionListener {
 				} 
 			}
 		});
-	}
-	
-	private void scheduleRefresh(){
-		new Thread(new Runnable() {
 			
-			public void run() {
-				try {
-					Thread.sleep(5000);
-				} catch (InterruptedException e) {	}
-				DLABasicControl.this.refresh();
-			}
-		}).start();
-	}
-
-	public void actionPerformed(final ActionEvent e) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				Object c = e.getSource();
-				if ((c == DLABasicControl.this.rdbtnHdmi1)
-						&& (DLABasicControl.this.rdbtnHdmi1.isSelected())) {
-					DLAInterface.getController().setCurrentInput(
-							Binary.ARG_INPUT_HDMI1);
-				}
-				if ((c == DLABasicControl.this.rdbtnHdmi2)
-						&& (DLABasicControl.this.rdbtnHdmi2.isSelected())) {
-					DLAInterface.getController().setCurrentInput(
-							Binary.ARG_INPUT_HDMI2);
-				}
-				if ((c == DLABasicControl.this.rdbtnComposite)
-						&& (DLABasicControl.this.rdbtnComposite.isSelected())) {
-					DLAInterface.getController().setCurrentInput(
-							Binary.ARG_INPUT_COMP);
-				}
-				if ((c == DLABasicControl.this.rdbtnPc)
-						&& (DLABasicControl.this.rdbtnPc.isSelected())) {
-					DLAInterface.getController().setCurrentInput(
-							Binary.ARG_INPUT_PC);
-				}
-				DLABasicControl.this.scheduleRefresh();
-			}
-		});
+		}
+		
 	}
 }
