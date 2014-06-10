@@ -39,7 +39,7 @@ public class Message {
 		StringBuffer sb = new StringBuffer();
 		if (data != null) {
 			for (int i = 0; i < data.length; i++) {
-				sb.append(String.format("%02x ", data[i] & 0xff));
+				sb.append(Hexer.getHex(data[i]));
 			}
 		}
 		return sb.toString();
@@ -59,5 +59,15 @@ public class Message {
 	
 	public short getUnit(){
 		return (short) ((data[1]<<8) + data[2]);
+	}
+	
+	private static class Hexer{
+		static final String HEXES = "0123456789ABCDEF";
+		  public static String getHex( byte raw ) {
+		    final StringBuilder hex = new StringBuilder( 2 );
+		      hex.append(HEXES.charAt((raw & 0xF0) >> 4))
+		         .append(HEXES.charAt((raw & 0x0F)));
+		    return hex.toString();
+		  }
 	}
 }
