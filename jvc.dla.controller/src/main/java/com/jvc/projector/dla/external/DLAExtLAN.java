@@ -61,7 +61,7 @@ public class DLAExtLAN implements DLAExternalConnector, Serializable {
 	private void connect(){
 		try {
 			socket = new Socket(addr, Binary.PORT);
-			socket.setSoTimeout(5000);
+			socket.setSoTimeout(1000);
 			authenticate();
 			out = socket.getOutputStream();	
 			in = socket.getInputStream();
