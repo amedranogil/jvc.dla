@@ -158,7 +158,7 @@ public class DLABasicControl extends JPanel implements ActionListener {
 			SwingUtilities.invokeLater(new Runnable() {
 
 			public void run() {
-				if (DLAInterface.getController() != null) {
+				if (DLAInterface.getController() != null && DLAInterface.getController().checkConnection()) {
 					if (DLAInterface.getController().isOn()) {
 						tglbtnOnoff.setSelected(true);
 						byte currentInput = DLAInterface.getController()
@@ -178,6 +178,7 @@ public class DLABasicControl extends JPanel implements ActionListener {
 						}
 					} else {
 						tglbtnOnoff.setSelected(false);
+						tglbtnOnoff.setEnabled(!DLAInterface.getController().isCoolingDown());
 						inputGroup.clearSelection();
 					}
 				} 
