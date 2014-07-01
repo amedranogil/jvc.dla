@@ -22,6 +22,7 @@ import javax.swing.JPanel;
 
 import com.jvc.projector.dla.Binary;
 import com.jvc.projector.dla.swing.buttons.DLAButton;
+import com.jvc.projector.dla.swing.buttons.DLARoundButton;
 
 public class DLAVirtualRemote extends JPanel {
 	/**
@@ -49,17 +50,17 @@ public class DLAVirtualRemote extends JPanel {
 		grid.add(new DLAButton("Lens Mr", Binary.BTN_LENS_MEMORY));
 		grid.add(new DLAButton("Anamorphic", Binary.BTN_ANAMO));
 
-		grid.add(new DLAButton("Hide", Binary.BTN_HIDE));
+		grid.add(new DLARoundButton("Hide", Binary.BTN_HIDE));
 		grid.add(new DLAButton("^", Binary.BTN_UP));
-		grid.add(new DLAButton("Light", -1));
+		grid.add(new DLARoundButton("Light", -1));
 
 		grid.add(new DLAButton("<", Binary.BTN_LEFT));
-		grid.add(new DLAButton("ok", Binary.BTN_OK));
+		grid.add(new DLARoundButton("ok", Binary.BTN_OK));
 		grid.add(new DLAButton(">", Binary.BTN_RIGHT));
 
-		grid.add(new DLAButton("Menu", Binary.BTN_MENU));
+		grid.add(new DLARoundButton("Menu", Binary.BTN_MENU));
 		grid.add(new DLAButton("v", Binary.BTN_DOWN));
-		grid.add(new DLAButton("Back", Binary.BTN_BACK));
+		grid.add(new DLARoundButton("Back", Binary.BTN_BACK));
 
 		grid.add(new DLAButton("Film", Binary.BTN_FILM));
 		grid.add(new DLAButton("Cinema", Binary.BTN_CINEMA));
@@ -74,10 +75,10 @@ public class DLAVirtualRemote extends JPanel {
 		grid.add(new DLAButton("C.M.D", Binary.BTN_CMD));
 
 		JPanel colors = new JPanel();
-		colors.add(new DLAButton("Gamma", Binary.BTN_GAMMA));
-		colors.add(new DLAButton("Color Temp", Binary.BTN_COLOR_TEMP));
-		colors.add(new DLAButton("Color P.file", Binary.BTN_COLOR_PROF));
-		colors.add(new DLAButton("Pic. Adj", Binary.BTN_PIC_ADJ));
+		colors.add(new DLARoundButton("Gamma", Binary.BTN_GAMMA));
+		colors.add(new DLARoundButton("Color Temp", Binary.BTN_COLOR_TEMP));
+		colors.add(new DLARoundButton("Color P.file", Binary.BTN_COLOR_PROF));
+		colors.add(new DLARoundButton("Pic. Adj", Binary.BTN_PIC_ADJ));
 		setLayout(new BoxLayout(this, 3));
 
 		add(grid);
