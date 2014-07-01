@@ -17,8 +17,8 @@ package com.jvc.projector.dla.swing;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import com.jvc.projector.dla.Binary;
