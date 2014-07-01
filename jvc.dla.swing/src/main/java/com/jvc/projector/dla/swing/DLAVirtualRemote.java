@@ -21,6 +21,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import com.jvc.projector.dla.Binary;
+import com.jvc.projector.dla.swing.buttons.DLAButton;
 
 public class DLAVirtualRemote extends JPanel {
 	/**
@@ -50,7 +51,7 @@ public class DLAVirtualRemote extends JPanel {
 
 		grid.add(new DLAButton("Hide", Binary.BTN_HIDE));
 		grid.add(new DLAButton("^", Binary.BTN_UP));
-		grid.add(new JButton("Light"));
+		grid.add(new DLAButton("Light", -1));
 
 		grid.add(new DLAButton("<", Binary.BTN_LEFT));
 		grid.add(new DLAButton("ok", Binary.BTN_OK));

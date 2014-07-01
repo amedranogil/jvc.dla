@@ -13,45 +13,46 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.jvc.projector.dla.swing;
+package com.jvc.projector.dla.swing.buttons;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.Action;
 import javax.swing.Icon;
-import javax.swing.JButton;
 import javax.swing.SwingUtilities;
 
-public class DLAButton extends JButton implements Runnable {
+import com.jvc.projector.dla.swing.DLAInterface;
+
+public class DLAButton extends RoundedGradientButton implements Runnable {
 	private static final long serialVersionUID = 1L;
 	private int btn;
+	private static final Color DARK = new Color(173,173,173);
+    private static final Color BG = new Color(204,204,204);
 
 	public DLAButton(Icon icon, int btn) {
-		super(icon);
+		super("", icon, BG, DARK);
 		setButton(btn);
 	}
 
 	private void setButton(int btn) {
-		this.btn = btn;
-		addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				SwingUtilities.invokeLater(DLAButton.this);
-			}
-		});
+		if (btn != -1) {
+			this.btn = btn;
+			addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					SwingUtilities.invokeLater(DLAButton.this);
+				}
+			});
+		}
 	}
 
 	public DLAButton(String name, int btn) {
-		super(name);
+		super(name, BG, DARK);
 		setButton(btn);
 	}
 
-	public DLAButton(Action a) {
-		super(a);
-	}
-
 	public DLAButton(String text, Icon icon, int btn) {
-		super(text, icon);
+		super(text, icon, BG, DARK);
 		setButton(btn);
 	}
 
