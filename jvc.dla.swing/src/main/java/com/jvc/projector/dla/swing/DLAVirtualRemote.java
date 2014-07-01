@@ -15,6 +15,7 @@
  ******************************************************************************/
 package com.jvc.projector.dla.swing;
 
+import java.awt.Color;
 import java.awt.GridLayout;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -31,11 +32,15 @@ public class DLAVirtualRemote extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	public DLAVirtualRemote() {
+		setBackground(Color.DARK_GRAY);
 		JPanel grid = new JPanel();
+		grid.setOpaque(false);
 		grid.setLayout(new GridLayout(0, 3, 5, 5));
 
 		grid.add(new DLAButton("StBy", Binary.BTN_STAND_BY));
-		grid.add(new JPanel());
+		JPanel blank = new JPanel();
+		blank.setOpaque(false);
+		grid.add(blank);
 		grid.add(new DLAButton("On", Binary.BTN_ON));
 
 		grid.add(new DLAButton("HDMI1", Binary.BTN_HDMI1));
@@ -79,9 +84,11 @@ public class DLAVirtualRemote extends JPanel {
 		colors.add(new DLARoundButton("Color Temp", Binary.BTN_COLOR_TEMP));
 		colors.add(new DLARoundButton("Color P.file", Binary.BTN_COLOR_PROF));
 		colors.add(new DLARoundButton("Pic. Adj", Binary.BTN_PIC_ADJ));
+		colors.setOpaque(false);
 		setLayout(new BoxLayout(this, 3));
 
 		add(grid);
 		add(colors);
+		
 	}
 }
