@@ -17,29 +17,59 @@ package com.jvc.projector.dla.swing;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JToggleButton;
+import javax.swing.SwingUtilities;
 
 import com.jvc.projector.dla.Binary;
 import com.jvc.projector.dla.swing.buttons.DLAButton;
 import com.jvc.projector.dla.swing.buttons.UIEllipticalButton;
 import com.jvc.projector.dla.swing.buttons.UIRoundedRectangleButton;
+import com.jvc.projector.dla.swing.buttons.UIToggleButton;
 
-public class DLAVirtualRemote extends JPanel {
+public class DLAVirtualRemote extends JPanel implements ActionListener, ComponentListener{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private static final Color DARK = new Color(173,173,173);
     private static final Color BG = new Color(204,204,204);
+    
+
+	private ScheduledExecutorService scheduler =
+		       Executors.newScheduledThreadPool(1);
+	
+	private ScheduledFuture<?> refreshHandle;
+    
+    
+	private AbstractButton tglbtnOnoff;
+	private AbstractButton rdbtnHdmi1;
+	private AbstractButton rdbtnHdmi2;
+	private AbstractButton rdbtnComposite;
+	private AbstractButton rdbtnPc;
+	private ButtonGroup inputGroup;
 
 	public DLAVirtualRemote() {
 		setBackground(Color.DARK_GRAY);
 		JPanel grid = new JPanel();
 		grid.setOpaque(false);
 		grid.setLayout(new GridLayout(0, 3, 5, 5));
+		addComponentListener(this);
+		//TODO Seems component listener is not notified...
+		componentShown(null);
 
 		AbstractButton b = new DLAButton("StBy", Binary.BTN_STAND_BY);
 		b.setUI(new UIRoundedRectangleButton(DARK, BG));
@@ -47,19 +77,23 @@ public class DLAVirtualRemote extends JPanel {
 		JPanel blank = new JPanel();
 		blank.setOpaque(false);
 		grid.add(blank);
-		b = new DLAButton("On", Binary.BTN_ON);
-		b.setUI(new UIRoundedRectangleButton(DARK, BG));		
-		grid.add(b);
+		tglbtnOnoff = new JToggleButton("On");
+		tglbtnOnoff.addActionListener(this);
+		tglbtnOnoff.setUI(new UIToggleButton(DARK, BG, Color.RED));		
+		grid.add(tglbtnOnoff);
 
-		b = new DLAButton("HDMI1", Binary.BTN_HDMI1);
-		b.setUI(new UIRoundedRectangleButton(DARK, BG));		
-		grid.add(b);
-		b = new DLAButton("HDMI2", Binary.BTN_HDMI2);
-		b.setUI(new UIRoundedRectangleButton(DARK, BG));		
-		grid.add(b);
-		b = new DLAButton("COMP", Binary.BTN_COMP);
-		b.setUI(new UIRoundedRectangleButton(DARK, BG));		
-		grid.add(b);
+		rdbtnHdmi1 = new JToggleButton("HDMI1");
+		rdbtnHdmi1.addActionListener(this);
+		rdbtnHdmi1.setUI(new UIToggleButton(DARK, BG, Color.YELLOW));		
+		grid.add(rdbtnHdmi1);
+		rdbtnHdmi2 = new JToggleButton("HDMI2");
+		rdbtnHdmi2.addActionListener(this);
+		rdbtnHdmi2.setUI(new UIToggleButton(DARK, BG, Color.YELLOW));		
+		grid.add(rdbtnHdmi2);
+		rdbtnComposite = new JToggleButton("COMP");
+		rdbtnComposite.addActionListener(this);
+		rdbtnComposite.setUI(new UIToggleButton(DARK, BG, Color.YELLOW));		
+		grid.add(rdbtnComposite);
 
 		b = new DLAButton("3D Form", Binary.BTN_3D_FORMAT);
 		b.setUI(new UIRoundedRectangleButton(DARK, BG));		
@@ -67,9 +101,10 @@ public class DLAVirtualRemote extends JPanel {
 		b = new DLAButton("3D Sett", Binary.BTN_3D_SETTING);
 		b.setUI(new UIRoundedRectangleButton(DARK, BG));		
 		grid.add(b);
-		b = new DLAButton("PC", Binary.BTN_PC);
-		b.setUI(new UIRoundedRectangleButton(DARK, BG));		
-		grid.add(b);
+		rdbtnPc = new JToggleButton("PC");
+		rdbtnPc.addActionListener(this);
+		rdbtnPc.setUI(new UIToggleButton(DARK, BG, Color.YELLOW));		
+		grid.add(rdbtnPc);
 
 		b = new DLAButton("Lens Ctrl", Binary.BTN_LENS_CONTROL);
 		b.setUI(new UIRoundedRectangleButton(DARK, BG));		
@@ -159,6 +194,111 @@ public class DLAVirtualRemote extends JPanel {
 
 		add(grid);
 		add(colors);
+
+		inputGroup = new ButtonGroup();
+
+		inputGroup.add(this.rdbtnHdmi1);
+		inputGroup.add(this.rdbtnHdmi2);
+		inputGroup.add(this.rdbtnComposite);
+		inputGroup.add(this.rdbtnPc);
+	}
+	
+	public void actionPerformed(final ActionEvent e) {
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				Object c = e.getSource();
+				if (c == tglbtnOnoff 
+						&& !((AbstractButton) c).isSelected()) {
+					DLAInterface.getController().poweOff();
+				} else if (DLAInterface.getController().isCoolingDown()) {
+					JOptionPane
+							.showMessageDialog(
+									DLAVirtualRemote.this,
+									"Projector ir cooling down, wait a minute before retrying.",
+									"Inane warning", 2);
+					DLAVirtualRemote.this.tglbtnOnoff.setSelected(false);
+				} else {
+					DLAInterface.getController().poweOn();
+				}
+				
+				if ((c == rdbtnHdmi1)
+						&& (rdbtnHdmi1.isSelected())) {
+					DLAInterface.getController().setCurrentInput(
+							Binary.ARG_INPUT_HDMI1);
+				}
+				if ((c == rdbtnHdmi2)
+						&& (rdbtnHdmi2.isSelected())) {
+					DLAInterface.getController().setCurrentInput(
+							Binary.ARG_INPUT_HDMI2);
+				}
+				if ((c == rdbtnComposite)
+						&& (rdbtnComposite.isSelected())) {
+					DLAInterface.getController().setCurrentInput(
+							Binary.ARG_INPUT_COMP);
+				}
+				if ((c == rdbtnPc)
+						&& (rdbtnPc.isSelected())) {
+					DLAInterface.getController().setCurrentInput(
+							Binary.ARG_INPUT_PC);
+				}
+			}
+		});
+	}
+	
+	public void componentShown(ComponentEvent arg0) {
+		System.out.println("shown");
+		refreshHandle =
+	            scheduler.scheduleAtFixedRate(new Refresh(), 0, 10, TimeUnit.SECONDS);
+	}
+
+	public void componentResized(ComponentEvent arg0) {
+	}
+
+	public void componentMoved(ComponentEvent arg0) {
+	}
+
+	public void componentHidden(ComponentEvent arg0) {
+		if (refreshHandle != null) {
+			refreshHandle.cancel(false);
+			refreshHandle = null;
+		}
+	}
+	
+	private class Refresh implements Runnable{
+
+		public void run() {
+			SwingUtilities.invokeLater(new Runnable() {
+
+			public void run() {
+				if (DLAInterface.getController() != null && DLAInterface.getController().checkConnection()) {
+					if (DLAInterface.getController().isOn()) {
+						tglbtnOnoff.setSelected(true);
+						byte currentInput = DLAInterface.getController()
+								.getCurrentInput();
+						if (currentInput == Binary.ARG_INPUT_HDMI1) {
+							rdbtnHdmi1.setSelected(true);
+						}
+						if (currentInput == Binary.ARG_INPUT_HDMI2) {
+							rdbtnHdmi2.setSelected(true);
+						}
+						if (currentInput == Binary.ARG_INPUT_COMP) {
+							rdbtnComposite
+									.setSelected(true);
+						}
+						if (currentInput == Binary.ARG_INPUT_PC) {
+							rdbtnPc.setSelected(true);
+						}
+					} else {
+						tglbtnOnoff.setSelected(false);
+						tglbtnOnoff.setEnabled(!DLAInterface.getController().isCoolingDown());
+						inputGroup.clearSelection();
+					}
+				} 
+				System.out.print("refreshed ");
+			}
+		});
+			
+		}
 		
 	}
 }

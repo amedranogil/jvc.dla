@@ -131,13 +131,15 @@ public class DLAInterface extends JFrame {
 		this.contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(this.contentPane);
 
-		JTabbedPane tabbedPane = new JTabbedPane(1);
-		this.contentPane.add(tabbedPane, "Center");
-
-		JPanel panel = new DLABasicControl();
-		tabbedPane.addTab("Basic", null, panel, null);
-
-		JPanel panel_1 = new DLAVirtualRemote();
-		tabbedPane.addTab("Remote", null, panel_1, null);
+//		JTabbedPane tabbedPane = new JTabbedPane(1);
+//		this.contentPane.add(tabbedPane, "Center");
+//
+//		JPanel panel = new DLABasicControl();
+//		tabbedPane.addTab("Basic", null, panel, null);
+//
+//		JPanel panel_1 = new DLAVirtualRemote();
+//		tabbedPane.addTab("Remote", null, panel_1, null);
+		
+		this.contentPane.add(new DLAVirtualRemote(), "Center");
 	}
 }
