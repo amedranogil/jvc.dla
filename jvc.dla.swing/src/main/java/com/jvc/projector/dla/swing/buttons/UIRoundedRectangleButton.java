@@ -39,7 +39,8 @@ public class UIRoundedRectangleButton extends UIGradientButton {
 		if (!j.getBounds().equals(base)) {
 			Dimension s = j.getSize();
 			base = j.getBounds();
-			shape = new RoundRectangle2D.Float(0, 0, s.width - 1, s.height - 1,
+			int borderSize = getBorderSize();
+			shape = new RoundRectangle2D.Float(1 + borderSize , 1 + borderSize , s.width - 1 - 2*borderSize, s.height - 1- 2*borderSize,
 					17, 17);
 		}
 		return shape;

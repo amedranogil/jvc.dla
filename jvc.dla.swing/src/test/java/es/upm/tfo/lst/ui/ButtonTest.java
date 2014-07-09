@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JToggleButton;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 
@@ -42,6 +43,7 @@ public class ButtonTest extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.BLACK);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
@@ -53,6 +55,10 @@ public class ButtonTest extends JFrame {
 		JButton btnEliptical = new JButton("Eliptical");
 		btnEliptical.setUI(new UIEllipticalButton(DARK, BG));
 		contentPane.add(btnEliptical, BorderLayout.EAST);
+		
+		JToggleButton btnToggle = new JToggleButton("toggle");
+		btnToggle.setUI(new UIRoundedRectangleButton(DARK, BG));
+		contentPane.add(btnToggle, BorderLayout.SOUTH);
 	}
 
 }

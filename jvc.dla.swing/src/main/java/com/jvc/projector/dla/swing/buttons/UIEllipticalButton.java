@@ -19,7 +19,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.JComponent;
 
@@ -41,9 +40,8 @@ public class UIEllipticalButton extends UIGradientButton {
 		if (!j.getBounds().equals(base)) {
 			Dimension s = j.getSize();
 			base = j.getBounds();
-			shape = new RoundRectangle2D.Float(0, 0, s.width - 1, s.height - 1,
-					17, 17);
-			shape = new Ellipse2D.Float(0, 0, s.width-1, s.height-1);
+			int borderSize = getBorderSize();
+			shape = new Ellipse2D.Float(1+borderSize, 1+borderSize, s.width - 1 - 2*borderSize, s.height - 1- 2*borderSize);
 		}
 		return shape;
 	}

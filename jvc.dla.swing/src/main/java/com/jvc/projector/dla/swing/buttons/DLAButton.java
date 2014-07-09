@@ -15,7 +15,6 @@
  ******************************************************************************/
 package com.jvc.projector.dla.swing.buttons;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -28,8 +27,6 @@ import com.jvc.projector.dla.swing.DLAInterface;
 public class DLAButton extends JButton implements Runnable {
 	private static final long serialVersionUID = 1L;
 	private int btn;
-	private static final Color DARK = new Color(173,173,173);
-    private static final Color BG = new Color(204,204,204);
 
 	public DLAButton(Icon icon, int btn) {
 		super("", icon);

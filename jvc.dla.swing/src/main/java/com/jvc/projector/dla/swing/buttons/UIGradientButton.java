@@ -22,8 +22,8 @@ import javax.swing.plaf.metal.MetalButtonUI;
 
 abstract class UIGradientButton extends MetalButtonUI {
 
-	private Color dark;
-	private Color light;
+	protected Color dark;
+	protected Color light;
 
 	public UIGradientButton(Color dark, Color light) {
 		super();
@@ -50,34 +50,53 @@ abstract class UIGradientButton extends MetalButtonUI {
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
 
-		ButtonModel m = ((AbstractButton) c).getModel();
-
 		Paint oldPaint = g2.getPaint();
-
-		g2.clip(getShape(c));
+		
+		updateBorder(g2, c);
+		
 		g2.setPaint(new GradientPaint(0.0f, 0.0f, light, 0.0f, c.getHeight(),
 				dark));
-		g2.fillRect(0, 0, c.getWidth(), c.getHeight());
+		g2.fill(getShape(c));
 
 		g2.setStroke(new BasicStroke(4f));
 		g2.setPaint(new GradientPaint(0.0f, 0.0f, light, 0.0f, c.getHeight(),
 				dark));
 
 		g2.setPaint(oldPaint);
-
-		if (!m.isRollover()) {
-			getRaisedBorder().paintBorder(c, g2, 0, 0, c.getWidth(),
-					c.getHeight());
-		} else {
-			Border b = new SoftBevelBorder(SoftBevelBorder.RAISED, dark,
-					light.brighter());
-			b.paintBorder(c, g2, 0, 0, c.getWidth(), c.getHeight());
-		}
+		
 		paint(g2, c);
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_DEFAULT);
 	}
+	
+	protected int getBorderSize() {
+		return 3;
+	}
 
+	private void updateBorder(Graphics2D g2, JComponent c) {
+		ButtonModel m = ((AbstractButton) c).getModel();
+		Color s1,s2,s3;
+		Shape s = getShape(c);
+		if (!m.isRollover()) {
+			s1 = dark.darker().darker();
+			s2 = dark.darker();
+			s3 = light.darker();
+		} else {
+			s1 = light.darker().darker();
+			s2 = light.darker();
+			s3 = dark.brighter();
+		}
+		g2.setStroke(new BasicStroke(5, BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL, 0));
+		g2.setColor(s1);
+		g2.draw(s);
+		g2.setStroke(new BasicStroke(3, BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL, 0));
+		g2.setColor(s2);
+		g2.draw(s);
+		g2.setStroke(new BasicStroke(1, BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL, 0));
+		g2.setColor(s3);
+		g2.draw(s);
+	}
+	
 	protected abstract Shape getShape(JComponent j);
 
 	@Override
@@ -94,18 +113,20 @@ abstract class UIGradientButton extends MetalButtonUI {
 
 		Paint oldPaint = g2.getPaint();
 
-		g2.clip(getShape(b));
+//		g2.clip(getShape(b));
 		g2.setPaint(new GradientPaint(0.0f, 0.0f, light.brighter(), 0.0f, b
 				.getHeight(), dark.brighter()));
-		g2.fillRect(0, 0, b.getWidth(), b.getHeight());
+//		g2.fillRect(0, 0, b.getWidth(), b.getHeight());
+		g2.fill(getShape(b));
 
 		g2.setStroke(new BasicStroke(4f));
 		g2.setPaint(new GradientPaint(0.0f, 0.0f, light.brighter(), 0.0f, b
 				.getHeight(), dark.brighter()));
 
 		g2.setPaint(oldPaint);
-		getLoweredBorder()
-				.paintBorder(b, g2, 0, 0, b.getWidth(), b.getHeight());
+//		getLoweredBorder()
+//				.paintBorder(b, g2, 0, 0, b.getWidth(), b.getHeight());
+		
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_DEFAULT);
 	}
