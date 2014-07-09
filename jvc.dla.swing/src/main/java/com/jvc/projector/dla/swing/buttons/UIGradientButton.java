@@ -75,7 +75,7 @@ abstract class UIGradientButton extends MetalButtonUI {
 		}
 		paint(g2, c);
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-				RenderingHints.VALUE_ANTIALIAS_OFF);
+				RenderingHints.VALUE_ANTIALIAS_DEFAULT);
 	}
 
 	protected abstract Shape getShape(JComponent j);
@@ -107,7 +107,7 @@ abstract class UIGradientButton extends MetalButtonUI {
 		getLoweredBorder()
 				.paintBorder(b, g2, 0, 0, b.getWidth(), b.getHeight());
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-				RenderingHints.VALUE_ANTIALIAS_OFF);
+				RenderingHints.VALUE_ANTIALIAS_DEFAULT);
 	}
 
 	/** {@inheritDoc} */
