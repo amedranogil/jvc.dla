@@ -16,6 +16,11 @@ import com.jvc.projector.dla.swing.buttons.UIToggleButton;
 
 public class ButtonTest extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private JPanel contentPane;
 
 	private static final Color DARK = new Color(173,173,173);
