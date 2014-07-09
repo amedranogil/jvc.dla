@@ -2,6 +2,7 @@ package com.jvc.projector.dla.swing.buttons;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -58,10 +59,6 @@ abstract class UIGradientButton extends MetalButtonUI {
 				dark));
 		g2.fill(getShape(c));
 
-		g2.setStroke(new BasicStroke(4f));
-		g2.setPaint(new GradientPaint(0.0f, 0.0f, light, 0.0f, c.getHeight(),
-				dark));
-
 		g2.setPaint(oldPaint);
 		
 		paint(g2, c);
@@ -73,7 +70,7 @@ abstract class UIGradientButton extends MetalButtonUI {
 		return 3;
 	}
 
-	private void updateBorder(Graphics2D g2, JComponent c) {
+	protected void updateBorder(Graphics2D g2, JComponent c) {
 		ButtonModel m = ((AbstractButton) c).getModel();
 		Color s1,s2,s3;
 		Shape s = getShape(c);
@@ -107,28 +104,8 @@ abstract class UIGradientButton extends MetalButtonUI {
 	/** {@inheritDoc} */
 	@Override
 	protected void paintButtonPressed(Graphics g, AbstractButton b) {
-		Graphics2D g2 = (Graphics2D) g;
-		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-				RenderingHints.VALUE_ANTIALIAS_ON);
-
-		Paint oldPaint = g2.getPaint();
-
-//		g2.clip(getShape(b));
-		g2.setPaint(new GradientPaint(0.0f, 0.0f, light.brighter(), 0.0f, b
-				.getHeight(), dark.brighter()));
-//		g2.fillRect(0, 0, b.getWidth(), b.getHeight());
-		g2.fill(getShape(b));
-
-		g2.setStroke(new BasicStroke(4f));
-		g2.setPaint(new GradientPaint(0.0f, 0.0f, light.brighter(), 0.0f, b
-				.getHeight(), dark.brighter()));
-
-		g2.setPaint(oldPaint);
-//		getLoweredBorder()
-//				.paintBorder(b, g2, 0, 0, b.getWidth(), b.getHeight());
-		
-		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-				RenderingHints.VALUE_ANTIALIAS_DEFAULT);
+            g.setColor(light);
+            ((Graphics2D) g).fill(getShape(b));
 	}
 
 	/** {@inheritDoc} */

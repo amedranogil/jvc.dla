@@ -15,6 +15,7 @@
  ******************************************************************************/
 package com.jvc.projector.dla.swing.buttons;
 
+import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -35,6 +36,7 @@ import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
 
 import javax.swing.JComponent;
+import javax.swing.JToggleButton;
 
 /**
  * @author amedrano
@@ -59,20 +61,16 @@ public class UIToggleButton extends UIGradientButton {
 	@Override
 	public void update(Graphics g, JComponent c) {
 		super.update(g, c);
-		Graphics2D g2 = (Graphics2D) g;
-		
-		RoundGradientPaint rgp = new RoundGradientPaint(75, 75, Color.magenta,
-	        new Point2D.Double(0, 85), Color.blue);
-		g2.setPaint(rgp);
-		g2.fill(getShape(c));
-
-		g2.setStroke(new BasicStroke(4f));
-		g2.setPaint(new GradientPaint(0.0f, 0.0f, led, 0.0f, c.getHeight(),
-				dark));
-		
-	    
-	    g2.setPaint(rgp);
-	    paint(g2, c);
+		if (c instanceof JToggleButton 
+				&& ((JToggleButton)c).isSelected()){
+			Graphics2D g2 = (Graphics2D) g;
+			Dimension d = c.getSize();
+			RoundGradientPaint rgp = new RoundGradientPaint(d.width/2, d.height/2, led,
+					new Point2D.Double(0, Math.min(d.width/2, d.height/2)), new Color(255, 255, 255, 0));
+			g2.setPaint(rgp);
+			g2.fill(getShape(c));
+			paint(g2, c);
+		}
 	}
 	
 	

@@ -12,6 +12,7 @@ import javax.swing.JButton;
 
 import com.jvc.projector.dla.swing.buttons.UIEllipticalButton;
 import com.jvc.projector.dla.swing.buttons.UIRoundedRectangleButton;
+import com.jvc.projector.dla.swing.buttons.UIToggleButton;
 
 public class ButtonTest extends JFrame {
 
@@ -57,7 +58,7 @@ public class ButtonTest extends JFrame {
 		contentPane.add(btnEliptical, BorderLayout.EAST);
 		
 		JToggleButton btnToggle = new JToggleButton("toggle");
-		btnToggle.setUI(new UIRoundedRectangleButton(DARK, BG));
+		btnToggle.setUI(new UIToggleButton(DARK, BG, Color.red));
 		contentPane.add(btnToggle, BorderLayout.SOUTH);
 	}
 
