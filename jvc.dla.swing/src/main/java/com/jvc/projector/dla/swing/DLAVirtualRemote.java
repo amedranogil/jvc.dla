@@ -18,18 +18,22 @@ package com.jvc.projector.dla.swing;
 import java.awt.Color;
 import java.awt.GridLayout;
 
+import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import com.jvc.projector.dla.Binary;
 import com.jvc.projector.dla.swing.buttons.DLAButton;
-import com.jvc.projector.dla.swing.buttons.DLARoundButton;
+import com.jvc.projector.dla.swing.buttons.UIEllipticalButton;
+import com.jvc.projector.dla.swing.buttons.UIRoundedRectangleButton;
 
 public class DLAVirtualRemote extends JPanel {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private static final Color DARK = new Color(173,173,173);
+    private static final Color BG = new Color(204,204,204);
 
 	public DLAVirtualRemote() {
 		setBackground(Color.DARK_GRAY);
@@ -37,53 +41,119 @@ public class DLAVirtualRemote extends JPanel {
 		grid.setOpaque(false);
 		grid.setLayout(new GridLayout(0, 3, 5, 5));
 
-		grid.add(new DLAButton("StBy", Binary.BTN_STAND_BY));
+		AbstractButton b = new DLAButton("StBy", Binary.BTN_STAND_BY);
+		b.setUI(new UIRoundedRectangleButton(DARK, BG));
+		grid.add(b);
 		JPanel blank = new JPanel();
 		blank.setOpaque(false);
 		grid.add(blank);
-		grid.add(new DLAButton("On", Binary.BTN_ON));
+		b = new DLAButton("On", Binary.BTN_ON);
+		b.setUI(new UIRoundedRectangleButton(DARK, BG));		
+		grid.add(b);
 
-		grid.add(new DLAButton("HDMI1", Binary.BTN_HDMI1));
-		grid.add(new DLAButton("HDMI2", Binary.BTN_HDMI2));
-		grid.add(new DLAButton("COMP", Binary.BTN_COMP));
+		b = new DLAButton("HDMI1", Binary.BTN_HDMI1);
+		b.setUI(new UIRoundedRectangleButton(DARK, BG));		
+		grid.add(b);
+		b = new DLAButton("HDMI2", Binary.BTN_HDMI2);
+		b.setUI(new UIRoundedRectangleButton(DARK, BG));		
+		grid.add(b);
+		b = new DLAButton("COMP", Binary.BTN_COMP);
+		b.setUI(new UIRoundedRectangleButton(DARK, BG));		
+		grid.add(b);
 
-		grid.add(new DLAButton("3D Form", Binary.BTN_3D_FORMAT));
-		grid.add(new DLAButton("3D Sett", Binary.BTN_3D_SETTING));
-		grid.add(new DLAButton("PC", Binary.BTN_PC));
+		b = new DLAButton("3D Form", Binary.BTN_3D_FORMAT);
+		b.setUI(new UIRoundedRectangleButton(DARK, BG));		
+		grid.add(b);
+		b = new DLAButton("3D Sett", Binary.BTN_3D_SETTING);
+		b.setUI(new UIRoundedRectangleButton(DARK, BG));		
+		grid.add(b);
+		b = new DLAButton("PC", Binary.BTN_PC);
+		b.setUI(new UIRoundedRectangleButton(DARK, BG));		
+		grid.add(b);
 
-		grid.add(new DLAButton("Lens Ctrl", Binary.BTN_LENS_CONTROL));
-		grid.add(new DLAButton("Lens Mr", Binary.BTN_LENS_MEMORY));
-		grid.add(new DLAButton("Anamorphic", Binary.BTN_ANAMO));
+		b = new DLAButton("Lens Ctrl", Binary.BTN_LENS_CONTROL);
+		b.setUI(new UIRoundedRectangleButton(DARK, BG));		
+		grid.add(b);
+		b = new DLAButton("Lens Mr", Binary.BTN_LENS_MEMORY);
+		b.setUI(new UIRoundedRectangleButton(DARK, BG));		
+		grid.add(b);
+		b = new DLAButton("Anamorphic", Binary.BTN_ANAMO);
+		b.setUI(new UIRoundedRectangleButton(DARK, BG));		
+		grid.add(b);
 
-		grid.add(new DLARoundButton("Hide", Binary.BTN_HIDE));
-		grid.add(new DLAButton("^", Binary.BTN_UP));
-		grid.add(new DLARoundButton("Light", -1));
+		b = new DLAButton("Hide", Binary.BTN_HIDE);
+		b.setUI(new UIEllipticalButton(DARK, BG));
+		grid.add(b);
+		b = new DLAButton("^", Binary.BTN_UP);
+		b.setUI(new UIRoundedRectangleButton(DARK, BG));		
+		grid.add(b);
+		b = new DLAButton("Light", -1);
+		b.setUI(new UIEllipticalButton(DARK, BG));
+		grid.add(b);
 
-		grid.add(new DLAButton("<", Binary.BTN_LEFT));
-		grid.add(new DLARoundButton("ok", Binary.BTN_OK));
-		grid.add(new DLAButton(">", Binary.BTN_RIGHT));
+		b = new DLAButton("<", Binary.BTN_LEFT);
+		b.setUI(new UIRoundedRectangleButton(DARK, BG));		
+		grid.add(b);
+		b = new DLAButton("ok", Binary.BTN_OK);
+		b.setUI(new UIEllipticalButton(DARK, BG));
+		grid.add(b);
+		b = new DLAButton(">", Binary.BTN_RIGHT);
+		b.setUI(new UIRoundedRectangleButton(DARK, BG));		
+		grid.add(b);
 
-		grid.add(new DLARoundButton("Menu", Binary.BTN_MENU));
-		grid.add(new DLAButton("v", Binary.BTN_DOWN));
-		grid.add(new DLARoundButton("Back", Binary.BTN_BACK));
+		b = new DLAButton("Menu", Binary.BTN_MENU);
+		b.setUI(new UIEllipticalButton(DARK, BG));
+		grid.add(b);
+		b = new DLAButton("v", Binary.BTN_DOWN);
+		b.setUI(new UIRoundedRectangleButton(DARK, BG));		
+		grid.add(b);
+		b = new DLAButton("Back", Binary.BTN_BACK);
+		b.setUI(new UIEllipticalButton(DARK, BG));
+		grid.add(b);
 
-		grid.add(new DLAButton("Film", Binary.BTN_FILM));
-		grid.add(new DLAButton("Cinema", Binary.BTN_CINEMA));
-		grid.add(new DLAButton("Anime", Binary.BTN_ANIME));
+		b = new DLAButton("Film", Binary.BTN_FILM);
+		b.setUI(new UIRoundedRectangleButton(DARK, BG));		
+		grid.add(b);
+		b = new DLAButton("Cinema", Binary.BTN_CINEMA);
+		b.setUI(new UIRoundedRectangleButton(DARK, BG));		
+		grid.add(b);
+		b = new DLAButton("Anime", Binary.BTN_ANIME);
+		b.setUI(new UIRoundedRectangleButton(DARK, BG));		
+		grid.add(b);
 
-		grid.add(new DLAButton("Natural", Binary.BTN_NATURAL));
-		grid.add(new DLAButton("Stage", Binary.BTN_STAGE));
-		grid.add(new DLAButton("3D", Binary.BTN_3D));
+		b = new DLAButton("Natural", Binary.BTN_NATURAL);
+		b.setUI(new UIRoundedRectangleButton(DARK, BG));		
+		grid.add(b);
+		b = new DLAButton("Stage", Binary.BTN_STAGE);
+		b.setUI(new UIRoundedRectangleButton(DARK, BG));		
+		grid.add(b);
+		b = new DLAButton("3D", Binary.BTN_3D);
+		b.setUI(new UIRoundedRectangleButton(DARK, BG));		
+		grid.add(b);
 
-		grid.add(new DLAButton("THX", Binary.BTN_THX));
-		grid.add(new DLAButton("User", Binary.BTN_USER));
-		grid.add(new DLAButton("C.M.D", Binary.BTN_CMD));
+		b = new DLAButton("THX", Binary.BTN_THX);
+		b.setUI(new UIRoundedRectangleButton(DARK, BG));		
+		grid.add(b);
+		b = new DLAButton("User", Binary.BTN_USER);
+		b.setUI(new UIRoundedRectangleButton(DARK, BG));		
+		grid.add(b);
+		b = new DLAButton("C.M.D", Binary.BTN_CMD);
+		b.setUI(new UIRoundedRectangleButton(DARK, BG));		
+		grid.add(b);
 
 		JPanel colors = new JPanel();
-		colors.add(new DLARoundButton("Gamma", Binary.BTN_GAMMA));
-		colors.add(new DLARoundButton("Color Temp", Binary.BTN_COLOR_TEMP));
-		colors.add(new DLARoundButton("Color P.file", Binary.BTN_COLOR_PROF));
-		colors.add(new DLARoundButton("Pic. Adj", Binary.BTN_PIC_ADJ));
+		b = new DLAButton("Gamma", Binary.BTN_GAMMA);
+		b.setUI(new UIEllipticalButton(DARK, BG));
+		colors.add(b);
+		b = new DLAButton("Color Temp", Binary.BTN_COLOR_TEMP);
+		b.setUI(new UIEllipticalButton(DARK, BG));
+		colors.add(b);
+		b = new DLAButton("Color P.file", Binary.BTN_COLOR_PROF);
+		b.setUI(new UIEllipticalButton(DARK, BG));
+		colors.add(b);
+		b = new DLAButton("Pic. Adj", Binary.BTN_PIC_ADJ);
+		b.setUI(new UIEllipticalButton(DARK, BG));
+		colors.add(b);
 		colors.setOpaque(false);
 		setLayout(new BoxLayout(this, 3));
 

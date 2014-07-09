@@ -20,18 +20,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.Icon;
+import javax.swing.JButton;
 import javax.swing.SwingUtilities;
 
 import com.jvc.projector.dla.swing.DLAInterface;
 
-public class DLAButton extends RoundedGradientButton implements Runnable {
+public class DLAButton extends JButton implements Runnable {
 	private static final long serialVersionUID = 1L;
 	private int btn;
 	private static final Color DARK = new Color(173,173,173);
     private static final Color BG = new Color(204,204,204);
 
 	public DLAButton(Icon icon, int btn) {
-		super("", icon, BG, DARK);
+		super("", icon);
 		setButton(btn);
 	}
 
@@ -47,12 +48,12 @@ public class DLAButton extends RoundedGradientButton implements Runnable {
 	}
 
 	public DLAButton(String name, int btn) {
-		super(name, BG, DARK);
+		super(name);
 		setButton(btn);
 	}
 
 	public DLAButton(String text, Icon icon, int btn) {
-		super(text, icon, BG, DARK);
+		super(text, icon);
 		setButton(btn);
 	}
 
