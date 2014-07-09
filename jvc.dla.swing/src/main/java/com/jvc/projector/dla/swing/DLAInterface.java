@@ -15,9 +15,6 @@
  ******************************************************************************/
 package com.jvc.projector.dla.swing;
 
-import com.jvc.projector.dla.DLAController;
-import com.jvc.projector.dla.external.DLAExternalConnector;
-
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -29,13 +26,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
+
+import com.jvc.projector.dla.DLAController;
+import com.jvc.projector.dla.external.DLAExternalConnector;
 
 public class DLAInterface extends JFrame {
 	/**
