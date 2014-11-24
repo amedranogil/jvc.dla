@@ -40,8 +40,8 @@ and open in your web browser:
 > ${project}\target\site\apidocs\index.html
 
 ##Roadmap##
--[ ] provide RS232 external connector
--[ ] provide Android interface
--[ ] IP auto detect mechanism
--[ ] improve javadoc
--[x] improve visualization of remote and simple control
+- [ ] provide RS232 external connector
+- [ ] provide Android interface
+- [ ] IP auto detect mechanism
+- [ ] improve javadoc
+- [x] improve visualization of remote and simple control
