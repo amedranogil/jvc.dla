@@ -9,6 +9,10 @@
 	</parent>
 	<artifactId>jvc.dla.swing</artifactId>
 	<name>JVC DLA PC interface</name>
+	<properties>		
+		<maven.compiler.source>1.5</maven.compiler.source>
+		<maven.compiler.target>1.5</maven.compiler.target>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>com.jvc</groupId>
